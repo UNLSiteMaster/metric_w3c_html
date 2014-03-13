@@ -16,10 +16,10 @@ class Metric extends MetricInterface
      */
     public function __construct($plugin_name, array $options = array())
     {
-        $options = array_merge_recursive($options, array(
+        $options = array_replace_recursive(array(
             'service_url' => 'http://validator.w3.org/check',
             'help_text' => array()
-        ));
+        ), $options);
 
         parent::__construct($plugin_name, $options);
     }
