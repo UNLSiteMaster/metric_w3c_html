@@ -114,7 +114,9 @@ class Metric extends MetricInterface
      */
     public function getResults($uri)
     {
-        $validator = new \Services_W3C_HTMLValidator();
+        $validator = new \Services_W3C_HTMLValidator(array(
+            'validator_uri' => $this->options['service_url']
+        ));
         $result = $validator->validate($uri);
         
         return $result;
