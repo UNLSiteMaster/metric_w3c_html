@@ -117,6 +117,11 @@ class Metric extends MetricInterface
         $validator = new \Services_W3C_HTMLValidator(array(
             'validator_uri' => $this->options['service_url']
         ));
+
+        $request = new \HTTP_Request2();
+        $request->setConfig('adapter', 'HTTP_Request2_Adapter_Curl');
+        $validator->setRequest($request);
+        
         $result = $validator->validate($uri);
         
         return $result;
