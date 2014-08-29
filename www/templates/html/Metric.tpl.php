@@ -7,6 +7,8 @@
     if (isset($parent) && $parent->context->getRawObject() instanceof \SiteMaster\Core\Auditor\Site\Page\MetricGrade) {
         $page = $parent->context->getPage();
         $url .= '?uri=' . urlencode($page->uri);
+    } else {
+        $url = str_replace('check', '', $url);
     }
     ?>
     To find and fix these errors, you can run your page though the <a href="<?php echo $url ?>">W3C HTML validator</a>.
