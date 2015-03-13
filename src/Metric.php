@@ -78,17 +78,58 @@ class Metric extends MetricInterface
         }
 
         foreach ($result->errors as $error) {
-            $machine_name = md5($error->message);
-            $mark = $this->getMark($machine_name, $error->message, 1, '', $this->getHelpText($machine_name));
+            $name = $this->getMarkNameFromMessage($error->message);
+
+            $machine_name = md5($name);
+            
+            $mark = $this->getMark($machine_name, $name, 1, '', $this->getHelpText($machine_name));
+            
+            $value_found = null;
+            if ($name != $error->message) {
+                $value_found = $error->message;
+            }
 
             $page->addMark($mark, array(
-                'line'    => $error->line,
-                'col'     => $error->col,
-                'context' => $error->source,
+                'line'        => $error->line,
+                'col'         => $error->col,
+                'context'     => $error->source, 
+                'value_found' => $value_found,
             ));
         }
 
         return true;
+    }
+
+    /**
+     * Get the machine name for a given error message
+     * 
+     * @param $error_message
+     * @return string
+     */
+    public function getMarkNameFromMessage($error_message)
+    {
+        switch (true) {
+            case (preg_match('/attribute (.*) not allowed on element (.*) at this point./i', $error_message)) :
+                $name = 'Attribute _ is not allowed on _ element';
+                break;
+            case (preg_match('/Bad value (.*) for attribute (.*) on element (.*): Illegal character in query: not a URL code point./i', $error_message)) :
+                $name = 'Bad value _ for attribute _ on element _: Illegal character in query';
+                break;
+            case (preg_match('/Duplicate ID (.*)./i', $error_message)) :
+                $name = 'Duplicate ID _';
+                break;
+            case (preg_match('/(.*) is not a member of a group specified for any attribute/i', $error_message)) :
+                $name = '_ is not a member of a group specified for any attribute';
+                break;
+            case (preg_match('/Bad value (.*) for attribute (.*) on element (.*): Expected a digit but saw (.*) instead./i', $error_message)) :
+                $name = 'Bad value _ for attribute _ on element _: Expected a digit but saw _ instead';
+                break;
+            default:
+                $name = $error_message;
+                break;
+        }
+
+        return $name;
     }
 
     /**
