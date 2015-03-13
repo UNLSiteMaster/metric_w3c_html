@@ -108,20 +108,20 @@ class Metric extends MetricInterface
      */
     public function getMarkNameFromMessage($error_message)
     {
-        switch ($error_message) {
-            case (preg_match('/attribute (.*) not allowed on element (.*) at this point./i', $error_message) ? true : false) :
+        switch (true) {
+            case (preg_match('/attribute (.*) not allowed on element (.*) at this point./i', $error_message)) :
                 $name = 'Attribute _ is not allowed on _ element';
                 break;
-            case (preg_match('/Bad value (.*) for attribute (.*) on element (.*): Illegal character in query: not a URL code point./i', $error_message) ? true : false) :
+            case (preg_match('/Bad value (.*) for attribute (.*) on element (.*): Illegal character in query: not a URL code point./i', $error_message)) :
                 $name = 'Bad value _ for attribute _ on element _: Illegal character in query';
                 break;
-            case (preg_match('/Duplicate ID (.*)./i', $error_message) ? true : false) :
+            case (preg_match('/Duplicate ID (.*)./i', $error_message)) :
                 $name = 'Duplicate ID _';
                 break;
-            case (preg_match('/(.*) is not a member of a group specified for any attribute/i', $error_message) ? true : false) :
+            case (preg_match('/(.*) is not a member of a group specified for any attribute/i', $error_message)) :
                 $name = '_ is not a member of a group specified for any attribute';
                 break;
-            case (preg_match('/Bad value (.*) for attribute (.*) on element (.*): Expected a digit but saw (.*) instead./i', $error_message) ? true : false) :
+            case (preg_match('/Bad value (.*) for attribute (.*) on element (.*): Expected a digit but saw (.*) instead./i', $error_message)) :
                 $name = 'Bad value _ for attribute _ on element _: Expected a digit but saw _ instead';
                 break;
             default:
