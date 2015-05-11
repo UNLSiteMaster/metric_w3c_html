@@ -124,6 +124,9 @@ class Metric extends MetricInterface
             case (preg_match('/Bad value (.*) for attribute (.*) on element (.*): Expected a digit but saw (.*) instead./i', $error_message)) :
                 $name = 'Bad value _ for attribute _ on element _: Expected a digit but saw _ instead';
                 break;
+            case (preg_match('/reference to entity (.*) for which no system identifier could be generated/i', $error_message)) :
+                $name = 'reference to entity _ for which no system identifier could be generated';
+                break;
             default:
                 $name = $error_message;
                 break;
