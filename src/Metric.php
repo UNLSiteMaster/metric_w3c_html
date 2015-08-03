@@ -1,6 +1,7 @@
 <?php
 namespace SiteMaster\Plugins\Metric_w3c_html;
 
+use HtmlValidator\Validator;
 use SiteMaster\Core\Auditor\Logger\Metrics;
 use SiteMaster\Core\Auditor\MetricInterface;
 use SiteMaster\Core\Registry\Site;
@@ -9,7 +10,6 @@ use SiteMaster\Core\Auditor\Site\Page;
 
 class Metric extends MetricInterface
 {
-
     /**
      * @param string $plugin_name
      * @param array $options
@@ -17,7 +17,7 @@ class Metric extends MetricInterface
     public function __construct($plugin_name, array $options = array())
     {
         $options = array_replace_recursive(array(
-            'service_url' => 'http://validator.w3.org/check',
+            'service_url' => 'https://validator.w3.org/nu/',
             'help_text' => array()
         ), $options);
 
@@ -71,28 +71,34 @@ class Metric extends MetricInterface
      */
     public function scan($uri, \DOMXPath $xpath, $depth, Page $page, Metrics $context)
     {
+        /**
+         * @var $result \HtmlValidator\Response
+         */
         $result = $this->getResults($uri);
-        
+
         if (!$result) {
             return false;
         }
-
-        foreach ($result->errors as $error) {
-            $name = $this->getMarkNameFromMessage($error->message);
+        
+        foreach ($result->getErrors() as $error) {
+            /**
+             * @var $error \HtmlValidator\Message
+             */
+            $name = $this->getMarkNameFromMessage($error->getText());
 
             $machine_name = md5($name);
             
             $mark = $this->getMark($machine_name, $name, 1, '', $this->getHelpText($machine_name));
             
             $value_found = null;
-            if ($name != $error->message) {
-                $value_found = $error->message;
+            if ($name != $error->getText()) {
+                $value_found = $error->getText();
             }
 
             $page->addMark($mark, array(
-                'line'        => $error->line,
-                'col'         => $error->col,
-                'context'     => $error->source, 
+                'line'        => $error->getFirstLine(),
+                'col'         => $error->getFirstColumn(),
+                'context'     => $error->getExtract(), 
                 'value_found' => $value_found,
             ));
         }
@@ -158,16 +164,12 @@ class Metric extends MetricInterface
      */
     public function getResults($uri)
     {
-        $validator = new \Services_W3C_HTMLValidator(array(
-            'validator_uri' => $this->options['service_url']
-        ));
-
-        $request = new \HTTP_Request2();
-        $request->setConfig('adapter', 'HTTP_Request2_Adapter_Curl');
-        $validator->setRequest($request);
+        $validator = new Validator($this->options['service_url']);
         
-        $result = $validator->validate($uri);
-        
-        return $result;
+        try {
+            return $validator->validateUrl($uri);
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
