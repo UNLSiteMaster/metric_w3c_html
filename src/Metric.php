@@ -115,20 +115,92 @@ class Metric extends MetricInterface
             case (preg_match('/attribute (.*) not allowed on element (.*) at this point./i', $error_message)) :
                 $name = 'Attribute _ is not allowed on _ element';
                 break;
-            case (preg_match('/Bad value (.*) for attribute (.*) on element (.*): Illegal character in query: not a URL code point./i', $error_message)) :
-                $name = 'Bad value _ for attribute _ on element _: Illegal character in query';
+            case (preg_match('/The (?:.*?) attribute on the (?:.*?) element is obsolete\. Use CSS instead\./i', $error_message)) :
+                $name = 'The _ attribute on the _ element is obsolete. Use CSS instead';
+                break;
+            case (preg_match('/The (?:.*?) element is obsolete\. Use CSS instead\./i', $error_message)) :
+                $name = 'The _ element is obsolete. Use CSS instead';
+                break;
+            case (preg_match('/Bad value .*for attribute .* on element/i', $error_message)) :
+                $name = 'Bad value _ for attribute _ on element _';
+                break;
+            case (preg_match('/Bad value .*for the attribute/i', $error_message)) :
+                $name = 'Bad value _ for the attribute _';
                 break;
             case (preg_match('/Duplicate ID (.*)./i', $error_message)) :
                 $name = 'Duplicate ID _';
                 break;
+            case (preg_match('/Duplicate attribute (?:.*)\./i', $error_message)) :
+                $name = 'Duplicate attribute _';
+                break;
             case (preg_match('/(.*) is not a member of a group specified for any attribute/i', $error_message)) :
                 $name = '_ is not a member of a group specified for any attribute';
                 break;
-            case (preg_match('/Bad value (.*) for attribute (.*) on element (.*): Expected a digit but saw (.*) instead./i', $error_message)) :
-                $name = 'Bad value _ for attribute _ on element _: Expected a digit but saw _ instead';
-                break;
             case (preg_match('/reference to entity (.*) for which no system identifier could be generated/i', $error_message)) :
                 $name = 'reference to entity _ for which no system identifier could be generated';
+                break;
+            case (preg_match('/Element .* not allowed as child of element .* in this context\. \(Suppressing further errors from this subtree\.\)/', $error_message)):
+                $name = 'Element _ not allowed as child of element _ in this context';
+                break;
+            case (preg_match('/Text not allowed in element .* in this context\./', $error_message)):
+                $name = 'Text not allowed in element _ in this context';
+                break;
+            case (preg_match('/Stray (?:start|end) tag (?:.*)\./', $error_message)):
+                $name = 'Stray _ tag _';
+                break;
+            case (preg_match('/Start tag (?:.*) seen in (?:.*)\./', $error_message)):
+                $name = 'Start tag _ seen in _';
+                break;
+            case (preg_match('/Start tag (?:.*) but an element of the same type was already open\./', $error_message)):
+                $name = 'Start tag _ seen but an element of the same type was already open';
+                break;
+            case (preg_match('/End tag .* seen, but there were open elements\./', $error_message)):
+                $name = 'End tag _ seen, but there were open elements';
+                break;
+            case (preg_match('/End tag(?: for)? .* (?:seen|implied), but there were (?:unclosed|open) elements\./', $error_message)):
+                $name = 'End tag _ seen, but there were unclosed elements';
+                break;
+            case (preg_match('/End tag .* violates nesting rules\./', $error_message)):
+                $name = 'End tag _ violates nesting rules';
+                break;
+            case (preg_match('/No .* element in scope but a .* end tag seen\./', $error_message)):
+                $name = 'No _ element in scope but a _ end tag seen';
+                break;
+            case (preg_match('/Unclosed element .*\./', $error_message)):
+                $name = 'Unclosed element _';
+                break;
+            case (preg_match('/Forbidden code point U\+/', $error_message)):
+                $name = 'Forbidden code point _';
+                break;
+            case (preg_match('/Malformed byte sequence: /', $error_message)):
+                $name = 'Malformed byte sequence _';
+                break;
+            case (preg_match('/Unmappable byte sequence: /', $error_message)):
+                $name = 'Unmappable byte sequence _';
+                break;
+            case (preg_match('/Bad character .* after/', $error_message)):
+                $name = 'Bad character _ in tag open state';
+                break;
+            case (preg_match('/The element .* must not appear as a descendant of the .* element\./', $error_message)):
+                $name = 'The element _ must not appear as a descendant of the _ element';
+                break;
+            case (preg_match('/Element .* is missing a required(?: instance of)? child element.*\./', $error_message)):
+                $name = 'Element _ is missing a required child element';
+                break;
+            case (preg_match('/Element .* is missing required attribute .*\./', $error_message)):
+                $name = 'Element _ is missing required attribute _';
+                break;
+            case (preg_match('/A table row was \d+ columns wide and exceeded the column count established using column markup/', $error_message)):
+                $name = 'A table row was _ columns wide and exceeded the column count established using column markup';
+                break;
+            case (preg_match('/Table column(?:s in range)? .* established by element .* (?:have|has) no cells beginning in (?:them|it)\./', $error_message)):
+                $name = 'Table column _ established by element _ has no cells beginning';
+                break;
+            case (preg_match('/Row \d+ of a row group established by a .* element has no cells beginning on it\./', $error_message)):
+                $name = 'Row _ of a row group established by a _ element has no cells beginning on it';
+                break;
+            case (preg_match('/The [“"]headers[”"] attribute on the element [“"]t[dh][”"] refers to the ID .*, but there is no [“"]th[”"] element with that ID in the same table\./u', $error_message)):
+                $name = 'The headers attribute on the element _ refers to the ID _, but there is no th element with that ID in the same table';
                 break;
             default:
                 $name = $error_message;
