@@ -71,9 +71,6 @@ class Metric extends MetricInterface
      */
     public function scan($uri, \DOMXPath $xpath, $depth, Page $page, Metrics $context)
     {
-        /**
-         * @var $result \HtmlValidator\Response
-         */
         $result = $this->getResults($uri);
 
         if (!$result) {
@@ -160,7 +157,7 @@ class Metric extends MetricInterface
      * Get the results for a given uri
      *
      * @param $uri
-     * @return bool|mixed
+     * @return \HtmlValidator\Response
      */
     public function getResults($uri)
     {
@@ -169,7 +166,7 @@ class Metric extends MetricInterface
         try {
             return $validator->validateUrl($uri);
         } catch (\Exception $e) {
-            return false;
+            return null;
         }
     }
 }
