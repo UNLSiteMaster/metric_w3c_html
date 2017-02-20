@@ -1,5 +1,5 @@
 {
     "require": {
-        "rexxars/html-validator": "~1.0"
+        "rexxars/html-validator": "^2.0"
     }
 }
