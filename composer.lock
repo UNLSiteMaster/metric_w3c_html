@@ -229,16 +229,16 @@
         },
         {
             "name": "rexxars/html-validator",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rexxars/html-validator.git",
-                "reference": "9a6d8874890945c66bf047bb8828b01402547add"
+                "reference": "0efbde751442773c820e2525fb9fcd05a0618a23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rexxars/html-validator/zipball/9a6d8874890945c66bf047bb8828b01402547add",
-                "reference": "9a6d8874890945c66bf047bb8828b01402547add",
+                "url": "https://api.github.com/repos/rexxars/html-validator/zipball/0efbde751442773c820e2525fb9fcd05a0618a23",
+                "reference": "0efbde751442773c820e2525fb9fcd05a0618a23",
                 "shasum": ""
             },
             "require": {
@@ -266,7 +266,7 @@
                 }
             ],
             "description": "Validates HTML using Validator.nu",
-            "time": "2016-08-07T13:13:35+00:00"
+            "time": "2017-02-21T23:30:36+00:00"
         }
     ],
     "packages-dev": [],
