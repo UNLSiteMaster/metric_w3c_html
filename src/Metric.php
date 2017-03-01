@@ -229,14 +229,14 @@ class Metric extends MetricInterface
      * Get the results for a given uri
      *
      * @param $uri
-     * @return \HtmlValidator\Response
+     * @return \HtmlValidator\HtmlValidator\Response|\HtmlValidator\Response
      */
     public function getResults($uri)
     {
         $validator = new Validator($this->options['service_url']);
         
         try {
-            return $validator->validateUrl($uri);
+            return $validator->validateUrl($uri, ['checkErrorPages'=>true]);
         } catch (\Exception $e) {
             return null;
         }
