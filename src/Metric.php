@@ -90,7 +90,7 @@ class Metric extends MetricInterface
         foreach ($result->getErrors() as $error) {
             // skip allowed errors
             if ($this->allowError($error->getText())) {
-                contiune;
+                continue;
             }
 
             /**
