@@ -88,6 +88,11 @@ class Metric extends MetricInterface
         }
         
         foreach ($result->getErrors() as $error) {
+            // skip allowed errors
+            if ($this->allowError($error->getText())) {
+                continue;
+            }
+
             /**
              * @var $error \HtmlValidator\Message
              */
@@ -111,6 +116,15 @@ class Metric extends MetricInterface
         }
 
         return true;
+    }
+
+    public function allowError($errorMessage) {
+        // allow chunk error since not really an issue
+        if (strpos(strtolower($errorMessage), 'premature end of chunk coded message body: closing chunk expected') !== false) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
