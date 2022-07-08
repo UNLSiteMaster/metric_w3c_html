@@ -124,6 +124,11 @@ class Metric extends MetricInterface
             return true;
         }
 
+        // Allow the "fetchpriority" attribute https://wicg.github.io/priority-hints/#img
+        if (strpos(strtolower($errorMessage), 'attribute “fetchpriority” not allowed on element') !== false) {
+            return true;
+        }
+        
         return false;
     }
 
