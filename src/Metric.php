@@ -128,7 +128,15 @@ class Metric extends MetricInterface
         if (strpos(strtolower($errorMessage), 'attribute “fetchpriority” not allowed on element') !== false) {
             return true;
         }
-        
+
+        // allow these css properties
+        if (strpos(strtolower($errorMessage), "css: “size-adjust”: property “size-adjust” doesn't exist.") !== false) {
+            return true;
+        }
+        if (strpos(strtolower($errorMessage), "css: “ascent-override”: property “ascent-override” doesn't exist.") !== false) {
+            return true;
+        }
+
         return false;
     }
 
