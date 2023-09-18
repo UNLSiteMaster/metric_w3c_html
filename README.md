@@ -21,3 +21,8 @@ Metric for the w3c html validator
 ],
 ```
 5. Run `php scripts/update.php` from the SiteMaster root directory to install the plugin.
+
+## Overrides for HTML validator
+
+Overrides are found in `src/Metric.php` in the `allowError` function. The text to match should be the same as the text
+from the validator website, e.g. "CSS: “ascent-override”: Property “ascent-override” doesn't exist.".
