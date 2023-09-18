@@ -93,8 +93,6 @@ class Metric extends MetricInterface
                 continue;
             }
 
-            var_dump($error->getText());
-
             /**
              * @var $error \HtmlValidator\Message
              */
@@ -131,7 +129,7 @@ class Metric extends MetricInterface
             return true;
         }
 
-        // allow test css properties
+        // allow these css properties
         if (strpos(strtolower($errorMessage), "css: “size-adjust”: property “size-adjust” doesn't exist.") !== false) {
             return true;
         }
