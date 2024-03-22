@@ -136,6 +136,9 @@ class Metric extends MetricInterface
         if (strpos(strtolower($errorMessage), "css: “ascent-override”: property “ascent-override” doesn't exist.") !== false) {
             return true;
         }
+        if (strpos(strtolower($errorMessage), "css: “text-wrap”: property “text-wrap” doesn't exist.") !== false) {
+            return true;
+        }
 
         return false;
     }
