@@ -144,6 +144,9 @@ class Metric extends MetricInterface
         if (strpos(strtolower($errorMessage), "attribute “inkscape:connector-curvature” not allowed on element “path” at this point.") !== false) {
             return true;
         }
+        if (strpos(strtolower($errorMessage), "element “sodipodi:namedview” not allowed as child of element “svg” in this context.") !== false) {
+            return true;
+        }
 
         return false;
     }
