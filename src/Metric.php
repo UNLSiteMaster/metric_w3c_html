@@ -129,7 +129,7 @@ class Metric extends MetricInterface
             return true;
         }
 
-        // allow these css properties
+        // allow these css properties and features
         if (strpos(strtolower($errorMessage), "css: “size-adjust”: property “size-adjust” doesn't exist.") !== false) {
             return true;
         }
@@ -139,12 +139,25 @@ class Metric extends MetricInterface
         if (strpos(strtolower($errorMessage), "css: “text-wrap”: property “text-wrap” doesn't exist.") !== false) {
             return true;
         }
+        if (strpos(strtolower($errorMessage), "css: unrecognized at-rule “@layer”") !== false) {
+            return true;
+        }
 
         // This is unneeded and gunks things up making real errors hard to find
         if (strpos(strtolower($errorMessage), "attribute “inkscape:connector-curvature” not allowed on element “path” at this point.") !== false) {
             return true;
         }
         if (strpos(strtolower($errorMessage), "element “sodipodi:namedview” not allowed as child of element “svg” in this context.") !== false) {
+            return true;
+        }
+
+        // Allow speculation rules script tag
+        if (strpos(strtolower($errorMessage), "bad value “speculationrules” for attribute “type” on element “script”: subtype missing.") !== false) {
+            return true;
+        }
+
+        // Dialog element should have autofocus on close button
+        if (strpos(strtolower($errorMessage), "a document must not include more than one “autofocus” attribute.") !== false) {
             return true;
         }
 
