@@ -156,6 +156,11 @@ class Metric extends MetricInterface
             return true;
         }
 
+        // Allow media attribute on source elements
+        if (strpos(strtolower($errorMessage), "attribute “media” not allowed on element “source” at this point.") !== false) {
+            return true;
+        }
+
         // Dialog element should have autofocus on close button
         if (strpos(strtolower($errorMessage), "a document must not include more than one “autofocus” attribute.") !== false) {
             return true;
